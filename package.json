@@ -1,18 +1,12 @@
 {
   "name": "flamework-template",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "scripts": {
     "build": "rbxtsc",
-    "watch": "rbxtsc -w"
+    "watch": "concurrently 'rbxtsc -w' 'rojo serve'"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "@rbxts/compiler-types": "^2.3.0-types.1",
-    "@rbxts/types": "^1.0.777",
+    "@rbxts/compiler-types": "^3.0.0-types.0",
+    "@rbxts/types": "^1.0.914",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
     "eslint": "^7.31.0",
@@ -20,13 +14,20 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-roblox-ts": "^0.0.30",
     "prettier": "^2.3.2",
-    "rbxts-transformer-flamework": "^1.2.2",
-    "roblox-ts": "^2.3.0",
-    "typescript": "~5.2.2"
+    "rbxts-transformer-flamework": "^1.3.2",
+    "roblox-ts": "^3.0.0",
+    "typescript": "^5.5.3",
+    "concurrently": "^9.2.1"
   },
   "dependencies": {
-    "@flamework/components": "^1.2.2",
-    "@flamework/core": "^1.2.2",
-    "@flamework/networking": "^1.2.2"
+    "@flamework/components": "^1.3.2",
+    "@flamework/core": "^1.3.2",
+    "@flamework/networking": "^1.3.2",
+    "@rbxts/log": "^0.6.3",
+    "@rbxts/signal": "^1.1.1",
+    "@rbxts/maid": "^1.1.0",
+    "@rbxts/abbreviate": "^3.0.5",
+    "@rbxts/profile-store": "^1.0.3",
+    "@rbxts/mad-replica": "^1.0.6"
   }
 }
