@@ -6,9 +6,6 @@ This is a fork of the official [flamework project template](https://github.com/r
 
 Run the following commands in a UNIX terminal:
 
-> [!INFO]
-> You can substitute `bun` with the JS package manager of your liking.
-
 ```sh
 # Change "myproject" to your project name
 bunx degit xnlogical/flamework-template myproject
