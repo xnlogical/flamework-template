@@ -3,28 +3,36 @@ import { Logger } from "@rbxts/log";
 import { Replica, ReplicaClient } from "@rbxts/mad-replica";
 
 export interface OnReplicaAdded {
-    onReplicaAdded(replica: Replica): void;
+	onReplicaAdded(replica: Replica): void;
 }
 
 @Controller()
 export class DataController implements OnStart {
-    private replica?: Replica;
-    private onAdded = new Set<OnReplicaAdded>();
+	private replica?: Replica;
 
-    public constructor(private readonly logger: Logger) {}
+	public constructor(private readonly logger: Logger) {}
 
-    public onStart(): void {
-        Modding.onListenerAdded<OnReplicaAdded>((l) => this.onAdded.add(l));
-        Modding.onListenerRemoved<OnReplicaAdded>((l) => this.onAdded.delete(l));
+	public onStart(): void {
+		const onAdded = new Set<OnReplicaAdded>();
 
-        const replica = this.replica;
-        if (replica) this.onAdded.forEach((l) => l.onReplicaAdded(replica));
+		Modding.onListenerAdded<OnReplicaAdded>((l) => {
+			if (this.replica) l.onReplicaAdded(this.replica);
+			else onAdded.add(l);
+		});
 
-        ReplicaClient.OnNew("PlayerData", (replica) => {
-            this.replica = replica;
-            this.logger.Info("Client replica received");
-        });
+		Modding.onListenerRemoved<OnReplicaAdded>((l) => onAdded.delete(l));
 
-        ReplicaClient.RequestData();
-    }
+		ReplicaClient.OnNew("PlayerData", (replica) => {
+			onAdded.forEach((l) => l.onReplicaAdded(replica));
+
+			this.replica = replica;
+			this.logger.Info("Client replica received");
+		});
+
+		ReplicaClient.RequestData();
+	}
+
+	public getReplica(): Replica | undefined {
+		return this.replica;
+	}
 }
